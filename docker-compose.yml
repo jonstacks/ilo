@@ -1,16 +1,14 @@
 version: '2'
 services:
-  ilo_server_1:
+  server:
     build: .
     command: ilo-server
     image: ilo
     networks:
       - ilo
-  ilo_server_2:
-    extends: ilo_server_1
-  ilo_server_3:
-    extends: ilo_server_1
-
+  sweep:
+    extends: server
+    command: ilo-sweep 192.168.0.1/24
 networks:
   ilo:
     driver: bridge

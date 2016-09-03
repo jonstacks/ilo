@@ -37,4 +37,5 @@ boxes with:
 
 ```sh
 docker-compose up -d
+docker-compose scale server=3
 ```
