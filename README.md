@@ -31,10 +31,9 @@ In order to port over the existing cli, I will be doing the following:
 Since I no longer have access to a Server with ILO. This project contains a test
 server. This test server allows us to test the `ilo-sweep` command by running
 the test server on multiple VMS. This server will also listen on port 17988 so
-we can test if that port is open from a port sweeping capability. A Vagrantfile
-has also been included so that we can easily spin up 3 test boxes with `vagrant
-up`. You can then ssh into each of the boxes and start the ilo-server with:
+we can test if that port is open from a port sweeping capability. A docker-compose.yml
+has also been included so that we can easily spin up 3 test boxes with:
 
 ```sh
-cd /vagrant/cmd/ilo-server/ && sudo ./ilo-server
+docker-compose up -d
 ```
