@@ -23,16 +23,17 @@ In order to port over the existing cli, I will be doing the following:
 1. Writing an iLO test server in go. This will allow me to write more go code,
    and to have something that will behave like an iLO server.
 2. Verify that the existing CLI works against this test server by spinning up
-   several VMs and having them run these test servers.
+   several containers and having them run these test servers.
 3. Write the new `ilo` package and `ilo-sweep` command in go.
 
 ### Test Server
 
 Since I no longer have access to a Server with ILO. This project contains a test
 server. This test server allows us to test the `ilo-sweep` command by running
-the test server on multiple VMS. This server will also listen on port 17988 so
-we can test if that port is open from a port sweeping capability. A docker-compose.yml
-has also been included so that we can easily spin up 3 test boxes with:
+the test server on multiple docker containers. This server will also listen on
+port 17988 so we can test if that port is open from a port sweeping capability.
+A docker-compose.yml has also been included so that we can easily spin up 3 test
+boxes with:
 
 ```sh
 docker-compose up -d
