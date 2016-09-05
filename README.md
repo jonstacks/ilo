@@ -39,3 +39,24 @@ boxes with:
 docker-compose up -d
 docker-compose scale server=3
 ```
+
+## Development
+
+### Deploying Test Instances
+
+```sh
+docker-compose up -d
+docker-compose scale server=3
+```
+
+### Rebuilding Code
+
+```sh
+docker-compose build
+```
+
+### Testing commands
+
+```sh
+docker-compose run --rm sweep ilo-sweep 172.18.0.0/24
+```
