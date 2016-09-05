@@ -15,9 +15,11 @@ const data = `<?xml version="1.0"?>
       <cUUID>0000-0000-0000-0000</cUUID>
       <VIRTUAL>
         <STATE>Inactive</STATE>
-        <VID><BSN></BSN>
-        <cUUID></cUUID>
-        </VID></VIRTUAL>
+        <VID>
+          <BSN></BSN>
+          <cUUID></cUUID>
+        </VID>
+      </VIRTUAL>
     </HSI>
     <MP>
       <ST>1</ST>
