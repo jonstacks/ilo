@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/jonstacks/ilo"
 )
@@ -20,10 +21,9 @@ func main() {
 	sweeper, err := ilo.NewSweeper(cidr)
 	handleError(err)
 
-	ips := []string{"172.18.0.2", "172.18.0.3", "172.18.0.4"}
-	for _, ip := range ips{
-		c := ilo.NewClient(ip)
-		info, _ := c.GetInfo()
+	// Sweep with a timeout of 5 seconds
+	infos := sweeper.Sweep(5 * time.Second)
+	for _, info := range infos {
 		fmt.Println(info)
 	}
 }
