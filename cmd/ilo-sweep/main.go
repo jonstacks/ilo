@@ -17,12 +17,13 @@ func handleError(err error) {
 
 func main() {
 	cidr := os.Args[1]
+	timeout := 2 * time.Second
 
 	sweeper, err := ilo.NewSweeper(cidr)
 	handleError(err)
 
 	// Sweep with a timeout of 5 seconds
-	infos := sweeper.Sweep(5 * time.Second)
+	infos := sweeper.Sweep(timeout)
 	for _, info := range infos {
 		fmt.Println(info)
 	}
