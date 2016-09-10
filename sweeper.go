@@ -4,6 +4,8 @@ import (
   "net"
   "sort"
   "time"
+
+  "github.com/jonstacks/goutils/netutils"
 )
 
 type Sweeper struct {
@@ -25,7 +27,7 @@ func (s Sweeper) Sweep(timeout time.Duration) []Info {
   quit := time.After(timeout)
 
   // Spawn all the clients
-  for ip := range IPNetwork(s.Network) {
+  for ip := range netutils.IPNetwork(s.Network) {
     go func(x net.IP) {
       c := NewClient(x.String())
       info, err := c.GetInfo()
