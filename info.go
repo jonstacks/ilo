@@ -21,17 +21,28 @@ func (i Info) String() string {
 	return fmt.Sprintf("%s | %s | %s | %s | %s", i.Host, i.Serial, i.Model, i.ILOVersion, i.Firmware)
 }
 
+func cmpIP(ip1, ip2 string) bool {
+	diff := len(ip1) - len(ip2)
+	switch {
+	case diff == 0:
+		return ip1 < ip2
+	case diff > 0:
+		return false
+	}
+	return true
+}
+
 // ByHost implements sort.Interface for []Info
 type ByHost []Info
 
 func (h ByHost) Len() int           { return len(h) }
 func (h ByHost) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
-func (h ByHost) Less(i, j int) bool { return h[i].Host < h[j].Host }
+func (h ByHost) Less(i, j int) bool { return cmpIP(h[i].Host, h[j].Host) }
 
 // PrintILOTable takes in a list of ILO infos and prints a table for them.
 func PrintILOTable(infos []Info) {
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetColWidth(50)
+	table.SetAutoWrapText(false)
 	table.SetHeader(
 		[]string{
 			"IP",
