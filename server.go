@@ -1,12 +1,13 @@
 package ilo
 
 import (
-  "fmt"
-  "net/http"
+	"fmt"
+	"net/http"
 )
 
+// StartServer starts a ILO Server that listens for /xmldata
 func StartServer() {
-  finish := make(chan bool)
+	finish := make(chan bool)
 
 	mainServer := http.NewServeMux()
 	mainServer.HandleFunc("/xmldata", iloData)
@@ -18,7 +19,7 @@ func StartServer() {
 	}()
 
 	go func() {
-    port := fmt.Sprintf(":%d", VIRTUAL_MEDIA_PORT)
+		port := fmt.Sprintf(":%d", VirtualMediaPort)
 		http.ListenAndServe(port, portServer)
 	}()
 

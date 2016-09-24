@@ -1,7 +1,10 @@
 package ilo
 
-const SSH_PORT            = 22
-const HTTP_PORT           = 80
-const IPMI_PORT           = 623
-const VIRTUAL_MEDIA_PORT  = 17988
-const REMOTE_CONSOLE_PORT = 17990
+// ILO Port Constants
+const (
+	SSHPort           = 22
+	HTTPPort          = 80
+	IPMIPort          = 623
+	VirtualMediaPort  = 17988
+	RemoteConsolePorT = 17990
+)

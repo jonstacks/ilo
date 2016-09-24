@@ -1,52 +1,55 @@
 package ilo
 
 import (
-  "bytes"
-  "fmt"
-  "io/ioutil"
-  "net/http"
+	"bytes"
+	"fmt"
+	"io/ioutil"
+	"net/http"
 
-  "gopkg.in/xmlpath.v2"
+	"gopkg.in/xmlpath.v2"
 )
 
+// Client is a struct for storing information about an ILO Client
 type Client struct {
-  host string
+	host string
 }
 
 var paths = map[string]*xmlpath.Path{
-  "SBSN": xmlpath.MustCompile("/RIMP/HSI/SBSN"),
-  "SPN":  xmlpath.MustCompile("/RIMP/HSI/SPN"),
-  "UUID": xmlpath.MustCompile("/RIMP/HSI/UUID"),
-  "PN":   xmlpath.MustCompile("/RIMP/MP/PN"),
-  "FWRI": xmlpath.MustCompile("/RIMP/MP/FWRI"),
+	"SBSN": xmlpath.MustCompile("/RIMP/HSI/SBSN"),
+	"SPN":  xmlpath.MustCompile("/RIMP/HSI/SPN"),
+	"UUID": xmlpath.MustCompile("/RIMP/HSI/UUID"),
+	"PN":   xmlpath.MustCompile("/RIMP/MP/PN"),
+	"FWRI": xmlpath.MustCompile("/RIMP/MP/FWRI"),
 }
 
+// NewClient creates a new ILO CLient for the specified host
 func NewClient(host string) Client {
-  return Client{host}
+	return Client{host}
 }
 
+// GetInfo does a HTTP Get to get the the data from the ILO Server
 func (c Client) GetInfo() (*Info, error) {
-  url := fmt.Sprintf("http://%s/xmldata?item=all", c.host)
-  resp, err := http.Get(url)
-  if err != nil {
-    return &Info{c.host, "", "", "", "", false}, err
-  }
+	url := fmt.Sprintf("http://%s/xmldata?item=all", c.host)
+	resp, err := http.Get(url)
+	if err != nil {
+		return &Info{c.host, "", "", "", "", false}, err
+	}
 
-  defer resp.Body.Close()
-  body, _ := ioutil.ReadAll(resp.Body)
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
 
-  root, err := xmlpath.Parse(bytes.NewReader(body))
-  if err != nil {
-    return nil, err
-  }
+	root, err := xmlpath.Parse(bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
 
-  data := make(map[string]string)
+	data := make(map[string]string)
 
-  for k := range paths {
-    if value, ok := paths[k].String(root); ok {
-      data[k] = value
-    }
-  }
+	for k := range paths {
+		if value, ok := paths[k].String(root); ok {
+			data[k] = value
+		}
+	}
 
-  return &Info{c.host, data["SBSN"], data["SPN"], data["PN"], data["FWRI"], true}, nil
+	return &Info{c.host, data["SBSN"], data["SPN"], data["PN"], data["FWRI"], true}, nil
 }

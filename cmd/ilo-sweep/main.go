@@ -24,7 +24,5 @@ func main() {
 
 	// Sweep with a timeout of 5 seconds
 	infos := sweeper.Sweep(timeout)
-	for _, info := range infos {
-		fmt.Println(info)
-	}
+	ilo.PrintILOTable(infos)
 }
