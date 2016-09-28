@@ -8,7 +8,15 @@ services:
       - ilo
   sweep:
     extends: server
-    command: ilo-sweep 192.168.0.1/24
+    command: ilo-sweep 172.18.0.0/24
+  python_sweep:
+    build:
+      context: .
+      dockerfile: Dockerfile-python
+    command: ilo-sweep 172.18.0.0/24 --timeout 10
+    image: python-sweep
+    networks:
+      - ilo
 networks:
   ilo:
     driver: bridge
