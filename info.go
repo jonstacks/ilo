@@ -3,6 +3,8 @@ package ilo
 import (
 	"fmt"
 	"os"
+	"strconv"
+	"strings"
 
 	"github.com/olekukonko/tablewriter"
 )
@@ -22,14 +24,21 @@ func (i Info) String() string {
 }
 
 func cmpIP(ip1, ip2 string) bool {
-	diff := len(ip1) - len(ip2)
-	switch {
-	case diff == 0:
-		return ip1 < ip2
-	case diff > 0:
-		return false
+	octets1 := strings.Split(ip1, ".")
+	octets2 := strings.Split(ip2, ".")
+
+	for i := range octets1 {
+		o1, _ := strconv.Atoi(octets1[i])
+		o2, _ := strconv.Atoi(octets2[i])
+
+		switch {
+		case o1 < o2:
+			return true
+		case o2 < o1:
+			return false
+		}
 	}
-	return true
+	return false
 }
 
 // ByHost implements sort.Interface for []Info

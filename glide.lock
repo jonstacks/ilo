@@ -1,0 +1,31 @@
+hash: 22ec2ee114456128c78ca36d28571b733d1ddf0a5cb544aea40fe8fec1b653e3
+updated: 2016-10-29T15:26:39.586620774-05:00
+imports:
+- name: github.com/jonstacks/goutils
+  version: 8a3efc19825fb8060edaa10847fb456aa8d7e18a
+  subpackages:
+  - netutils
+- name: github.com/mattn/go-runewidth
+  version: 737072b4e32b7a5018b4a7125da8d12de90e8045
+- name: github.com/olekukonko/tablewriter
+  version: bdcc175572fd7abece6c831e643891b9331bc9e7
+- name: golang.org/x/net
+  version: 3fe3024eef808ba2798cc1855690f49e2b860573
+  subpackages:
+  - html
+  - html/atom
+- name: gopkg.in/xmlpath.v2
+  version: 860cbeca3ebcc600db0b213c0e83ad6ce91f5739
+testImports:
+- name: github.com/davecgh/go-spew
+  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
+  subpackages:
+  - difflib
+- name: github.com/stretchr/testify
+  version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
+  subpackages:
+  - assert

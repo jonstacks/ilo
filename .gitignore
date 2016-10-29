@@ -31,3 +31,6 @@ _testmain.go
 # Locally generated binaries cause I keep trying to open them up in atom on
 # accident
 cmd/ilo-server/ilo-server
+
+# Don't add the vendor folder
+vendor
