@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"gopkg.in/xmlpath.v2"
+	xmlpath "gopkg.in/xmlpath.v2"
 )
 
 // Client is a struct for storing information about an ILO Client
