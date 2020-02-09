@@ -1,22 +1,28 @@
-version: '2'
+version: '3.7'
 services:
   server:
     build: .
     command: ilo-server
     image: ilo
     networks:
-      - ilo
+    - ilo
   sweep:
-    extends: server
-    command: ilo-sweep 172.18.0.0/24
+    image: ilo
+    command: ilo-sweep 172.16.238.0/24
+    networks:
+    - ilo
   python_sweep:
     build:
       context: .
       dockerfile: Dockerfile-python
-    command: ilo-sweep 172.18.0.0/24 --timeout 10
+    command: ilo-sweep 172.16.238.0/24 --timeout 10
     image: python-sweep
     networks:
       - ilo
 networks:
   ilo:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.238.0/24
