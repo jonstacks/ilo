@@ -1,14 +1,13 @@
-FROM golang:1.7
+FROM golang:1.13-alpine as builder
 
-ENV REPO_PATH "$GOPATH/src/github.com/jonstacks/ilo"
-RUN mkdir -p "$REPO_PATH"
+WORKDIR /ilo
+COPY go.mod go.sum ./
+RUN go mod download
 
-COPY . $REPO_PATH
+COPY . .
+RUN go install ./cmd/...
 
-RUN go get "gopkg.in/xmlpath.v2" && \
-    go get "github.com/jonstacks/goutils/netutils" && \
-    go get "github.com/olekukonko/tablewriter"
-RUN go install -v "github.com/jonstacks/ilo/cmd/ilo-sweep" && \
-    go install -v "github.com/jonstacks/ilo/cmd/ilo-server"
-
+FROM alpine
+COPY --from=builder /go/bin/ilo-sweep /usr/local/bin/
+COPY --from=builder /go/bin/ilo-server /usr/local/bin/
 CMD ["ilo-sweep"]
