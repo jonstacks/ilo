@@ -1,5 +1,7 @@
 # ILO
 
+[![Build Status](https://travis-ci.org/jonstacks/ilo.svg?branch=master)](https://travis-ci.org/jonstacks/ilo)
+
 A library and command line tool written in golang for interacting with
 Integrated Lights Out(iLO) devices.
 
