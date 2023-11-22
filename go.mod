@@ -8,6 +8,6 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/rivo/uniseg v0.4.3 // indirect
 	github.com/stretchr/testify v1.7.0
-	golang.org/x/net v0.7.0 // indirect
+	golang.org/x/net v0.17.0 // indirect
 	gopkg.in/xmlpath.v2 v2.0.0-20150820204837-860cbeca3ebc
 )
