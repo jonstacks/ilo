@@ -1,6 +1,6 @@
 # ILO
 
-[![Build Status](https://travis-ci.org/jonstacks/ilo.svg?branch=master)](https://travis-ci.org/jonstacks/ilo)
+[![CI](https://github.com/jonstacks/ilo/actions/workflows/test.yaml/badge.svg)](https://github.com/jonstacks/ilo/actions/workflows/test.yaml)
 
 A library and command line tool written in golang for interacting with
 Integrated Lights Out(iLO) devices.
