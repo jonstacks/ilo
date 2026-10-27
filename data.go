@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
-	"time"
 )
 
 const dataFormat = `<?xml version="1.0"?>
@@ -55,7 +54,6 @@ var data string
 
 func iloData(w http.ResponseWriter, r *http.Request) {
 	if data == "" {
-		rand.Seed(time.Now().UnixNano())
 		// Initialize data
 		data = fmt.Sprintf(
 			dataFormat,
@@ -66,5 +64,5 @@ func iloData(w http.ResponseWriter, r *http.Request) {
 		)
 	}
 
-	fmt.Fprintf(w, data)
+	fmt.Fprint(w, data)
 }
