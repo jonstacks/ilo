@@ -2,8 +2,10 @@ package ilo
 
 import (
 	"fmt"
+	"io"
 	"math/rand"
 	"net/http"
+	"sync"
 )
 
 const dataFormat = `<?xml version="1.0"?>
@@ -50,19 +52,22 @@ var productNames = []string{
 }
 var firmwareVersions = []string{"2.02", "2.04"}
 
-var data string
+var (
+	data     string
+	dataOnce sync.Once
+)
+
+func initData() {
+	data = fmt.Sprintf(
+		dataFormat,
+		randomString(10),
+		sProductNames[rand.Intn(len(sProductNames))],
+		productNames[rand.Intn(len(productNames))],
+		firmwareVersions[rand.Intn(len(firmwareVersions))],
+	)
+}
 
 func iloData(w http.ResponseWriter, r *http.Request) {
-	if data == "" {
-		// Initialize data
-		data = fmt.Sprintf(
-			dataFormat,
-			randomString(10),
-			sProductNames[rand.Intn(len(sProductNames))],
-			productNames[rand.Intn(len(productNames))],
-			firmwareVersions[rand.Intn(len(firmwareVersions))],
-		)
-	}
-
-	fmt.Fprint(w, data)
+	dataOnce.Do(initData)
+	io.WriteString(w, data)
 }
