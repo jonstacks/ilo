@@ -1,0 +1,40 @@
+version: 2
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/"
+    assignees:
+      - "jonstacks"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 10
+    groups:
+      golang-dependencies:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    assignees:
+      - "jonstacks"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 10
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    assignees:
+      - "jonstacks"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 10
+    groups:
+      docker-dependencies:
+        patterns:
+          - "*"

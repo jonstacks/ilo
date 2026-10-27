@@ -1,9 +1,7 @@
 package ilo
 
 import (
-	"bytes"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 
 	xmlpath "gopkg.in/xmlpath.v2"
@@ -36,9 +34,8 @@ func (c Client) GetInfo() (*Info, error) {
 	}
 
 	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
 
-	root, err := xmlpath.Parse(bytes.NewReader(body))
+	root, err := xmlpath.Parse(resp.Body)
 	if err != nil {
 		return nil, err
 	}
