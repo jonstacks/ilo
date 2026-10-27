@@ -1,6 +1,6 @@
 module github.com/jonstacks/ilo
 
-go 1.26
+go 1.26.0
 
 require (
 	github.com/jonstacks/goutils v0.1.0
@@ -10,10 +10,10 @@ require (
 )
 
 require (
+	github.com/clipperhouse/uax29/v2 v2.7.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/mattn/go-runewidth v0.0.16 // indirect
+	github.com/mattn/go-runewidth v0.0.31 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rivo/uniseg v0.4.7 // indirect
-	golang.org/x/net v0.43.0 // indirect
+	golang.org/x/net v0.61.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
