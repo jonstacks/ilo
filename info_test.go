@@ -46,6 +46,53 @@ func ExamplePrintILOTable() {
 	// +---------+--------+--------+-------------+------------------+
 }
 
+func ExamplePrintILOTable_empty() {
+	PrintILOTable(nil)
+
+	// Output:
+	// +----+--------+-------+-------------+------------------+
+	// | IP | SERIAL | MODEL | ILO VERSION | FIRMWARE VERSION |
+	// +----+--------+-------+-------------+------------------+
+	// +----+--------+-------+-------------+------------------+
+}
+
+func ExamplePrintILOTable_longAndMultiline() {
+	PrintILOTable([]Info{
+		{"192.168.100.100", "ABCDE12345", "ProLiant BL480 G6 with a model name longer than sixty characters total", "Integrated Lights-Out 4 (iLO 4)", "2.02", true},
+		{"1.2.3.4", "XYZ", "Model\nSecond line\n\nLast line", "iLO 3", "2.04a", true},
+	})
+
+	// Output:
+	// +-----------------+------------+------------------------------------------------------------------------+---------------------------------+------------------+
+	// |       IP        |   SERIAL   |                                 MODEL                                  |           ILO VERSION           | FIRMWARE VERSION |
+	// +-----------------+------------+------------------------------------------------------------------------+---------------------------------+------------------+
+	// | 192.168.100.100 | ABCDE12345 | ProLiant BL480 G6 with a model name longer than sixty characters total | Integrated Lights-Out 4 (iLO 4) |             2.02 |
+	// | 1.2.3.4         | XYZ        | Model                                                                  | iLO 3                           | 2.04a            |
+	// |                 |            | Second line                                                            |                                 |                  |
+	// |                 |            |                                                                        |                                 |                  |
+	// |                 |            | Last line                                                              |                                 |                  |
+	// +-----------------+------------+------------------------------------------------------------------------+---------------------------------+------------------+
+}
+
+func ExamplePrintILOTable_numericAndWhitespace() {
+	PrintILOTable([]Info{
+		{"1.2.3.4", "123", "1,234", "50%", "-2.02", true},
+		{"1.2.3.5", "ABCDEF", "Model", "iLO 4", "2.04a", true},
+		{"1.2.3.6", " ABC ", " Model ", "", "1e3", true},
+		{"1.2.3.7", "", "", "", "", true},
+	})
+
+	// Output:
+	// +---------+--------+---------+-------------+------------------+
+	// |   IP    | SERIAL |  MODEL  | ILO VERSION | FIRMWARE VERSION |
+	// +---------+--------+---------+-------------+------------------+
+	// | 1.2.3.4 |    123 |   1,234 | 50%         |            -2.02 |
+	// | 1.2.3.5 | ABCDEF | Model   | iLO 4       | 2.04a            |
+	// | 1.2.3.6 |  ABC   |  Model  |             | 1e3              |
+	// | 1.2.3.7 |        |         |             |                  |
+	// +---------+--------+---------+-------------+------------------+
+}
+
 func ExampleInfo() {
 	i := &Info{
 		"testhost",

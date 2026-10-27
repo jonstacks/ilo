@@ -3,10 +3,13 @@ package ilo
 import (
 	"fmt"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 
 	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/renderer"
+	"github.com/olekukonko/tablewriter/tw"
 )
 
 // Info is a struct to store ILO Info
@@ -50,9 +53,17 @@ func (h ByHost) Less(i, j int) bool { return cmpIP(h[i].Host, h[j].Host) }
 
 // PrintILOTable takes in a list of ILO infos and prints a table for them.
 func PrintILOTable(infos []Info) {
-	table := tablewriter.NewWriter(os.Stdout)
-	table.SetAutoWrapText(false)
-	table.SetHeader(
+	table := tablewriter.NewTable(os.Stdout,
+		tablewriter.WithRenderer(&iloTableRenderer{renderer.NewBlueprint(tw.Rendition{
+			Symbols: tw.NewSymbols(tw.StyleASCII),
+		})}),
+		tablewriter.WithHeaderAutoWrap(tw.WrapNone),
+		tablewriter.WithRowAutoWrap(tw.WrapNone),
+		tablewriter.WithTrimSpace(tw.Off),
+		tablewriter.WithTrimTab(tw.Off),
+		tablewriter.WithTrimLine(tw.Off),
+	)
+	table.Header(
 		[]string{
 			"IP",
 			"Serial",
@@ -72,4 +83,30 @@ func PrintILOTable(infos []Info) {
 		})
 	}
 	table.Render()
+}
+
+// iloTableRenderer preserves v0.0.5's per-cell numeric alignment.
+type iloTableRenderer struct {
+	*renderer.Blueprint
+}
+
+var iloTableDecimal = regexp.MustCompile(`^-?(?:\d{1,3}(?:,\d{3})*|\d+)(?:\.\d+)?$`)
+
+func (r *iloTableRenderer) Row(row []string, ctx tw.Formatting) {
+	for col, cell := range ctx.Row.Current {
+		cell.Align = tw.AlignLeft
+		if iloTableDecimal.MatchString(strings.TrimSpace(cell.Data)) {
+			cell.Align = tw.AlignRight
+		}
+		ctx.Row.Current[col] = cell
+	}
+	r.Blueprint.Row(row, ctx)
+}
+
+func (r *iloTableRenderer) Line(ctx tw.Formatting) {
+	r.Blueprint.Line(ctx)
+	// Legacy header-only tables have both a header separator and a bottom border.
+	if ctx.Row.Position == tw.Header && ctx.Row.Location == tw.LocationEnd {
+		r.Blueprint.Line(ctx)
+	}
 }
